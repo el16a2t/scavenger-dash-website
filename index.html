@@ -1,0 +1,1559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scavenger Dash London</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        :root {
+            --bg-primary: #f8fafc;
+            --bg-secondary: #ffffff;
+            --bg-accent: #f0f9f4;
+            --text-primary: #0f172a;
+            --text-secondary: #64748b;
+            --text-tertiary: #94a3b8;
+            --accent: #2d5a5a;
+            --accent-hover: #245050;
+            --accent-light: #e8f4f1;
+            --hero-tick: #4ade80;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --border: #e2e8f0;
+            --whatsapp-green: #25d366;
+            --whatsapp-bg: #f0f2f5;
+            --whatsapp-message: #dcf8c6;
+            --whatsapp-incoming: #ffffff;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+            --gradient-1: linear-gradient(135deg, #2d5a5a 0%, #245050 100%);
+            --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 3px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: var(--bg-accent);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent);
+            border-radius: 2px;
+        }
+        
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            padding: 0.75rem 0;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateY(0);
+        }
+        
+        .nav.hidden {
+            transform: translateY(-100%);
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            line-height: 1.2;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .logo-london {
+            color: var(--accent);
+            display: block;
+        }
+        
+        .nav-cta {
+            background: var(--accent);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.875rem;
+            transition: all 0.2s ease;
+            border: none;
+            white-space: nowrap;
+        }
+        
+        .nav-cta:hover {
+            background: var(--accent-hover);
+            transform: translateY(-1px);
+        }
+        
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            background: radial-gradient(ellipse at top left, rgba(45, 90, 90, 0.4) 0%, rgba(45, 90, 90, 0.2) 40%, rgba(255, 255, 255, 1) 70%);
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+        }
+        
+        .hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            align-items: center;
+        }
+        
+        .hero-content {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s ease 0.3s forwards;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: clamp(1.75rem, 5vw, 3rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+        
+        .hero-subtitle {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+        }
+        
+        .hero-features {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .hero-feature {
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+        
+        .hero-feature .icon {
+            width: 16px;
+            height: 16px;
+            background: var(--hero-tick);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.625rem;
+        }
+        
+        .hero-cta {
+            background: var(--accent);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: inline-block;
+            transition: all 0.2s ease;
+            border: none;
+            white-space: nowrap;
+        }
+        
+        .hero-cta:hover {
+            background: var(--accent-hover);
+            transform: translateY(-1px);
+        }
+        
+        .price-note {
+            margin-top: 0.75rem;
+            font-size: 1rem;
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+        
+        /* Section Styling */
+        .section {
+            padding: 3rem 0;
+            position: relative;
+        }
+        
+        .section-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+            text-align: center;
+        }
+        
+        .section-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: clamp(1.5rem, 4vw, 2.25rem);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+        
+        .section-subtitle {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        /* How It Works */
+        .how-it-works {
+            background: var(--bg-secondary);
+        }
+        
+        .steps {
+            display: grid;
+            gap: 2.5rem;
+        }
+        
+        .step {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            align-items: center;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+            text-align: center;
+        }
+        
+        .step.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .step:nth-child(even) {
+            direction: rtl;
+        }
+        
+        .step:nth-child(even) > * {
+            direction: ltr;
+        }
+        
+        .step-content h3 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            color: var(--text-primary);
+        }
+        
+        .step-description {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+        
+        .step-visual {
+            height: 200px;
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* WhatsApp Demo */
+        .whatsapp-demo {
+            padding: 3rem 0;
+            background: var(--bg-accent);
+        }
+        
+        .whatsapp-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+            text-align: center;
+        }
+        
+        .chat-demo {
+            background: var(--whatsapp-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            max-width: 340px;
+            margin: 0 auto;
+            box-shadow: var(--shadow-lg);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+        }
+        
+        .chat-demo.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .chat-header {
+            background: var(--whatsapp-green);
+            padding: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .chat-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: var(--whatsapp-green);
+            font-size: 0.75rem;
+        }
+        
+        .chat-info h3 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 0.125rem;
+        }
+        
+        .chat-status {
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .chat-messages {
+            background: linear-gradient(180deg, #e5ddd5 0%, #d1c7be 100%);
+            padding: 0.75rem;
+            height: 300px;
+            overflow-y: auto;
+            position: relative;
+        }
+        
+        .message {
+            margin-bottom: 0.5rem;
+            max-width: 85%;
+            opacity: 0;
+            transform: translateY(8px);
+            transition: all 0.3s ease;
+        }
+        
+        .message.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .message.incoming {
+            background: var(--whatsapp-incoming);
+            color: var(--text-primary);
+            padding: 0.5rem 0.75rem 0.25rem 0.75rem;
+            border-radius: 10px 10px 10px 3px;
+            font-size: 0.8rem;
+            box-shadow: var(--shadow-sm);
+            text-align: left;
+            max-height: 2.8rem;
+            overflow: hidden;
+            line-height: 1.3;
+        }
+        
+        .message.incoming.items-list {
+            max-height: none;
+            line-height: 1.2;
+            padding: 0.75rem 1rem 0.5rem 1rem;
+        }
+        
+        .message.outgoing {
+            background: var(--whatsapp-message);
+            color: var(--text-primary);
+            padding: 0.5rem 0.75rem 0.25rem 0.75rem;
+            border-radius: 10px 10px 3px 10px;
+            margin-left: auto;
+            font-size: 0.8rem;
+            box-shadow: var(--shadow-sm);
+            text-align: left;
+            max-height: 2.8rem;
+            overflow: hidden;
+            line-height: 1.3;
+        }
+        
+        .message-time {
+            font-size: 0.625rem;
+            opacity: 0.7;
+            text-align: right;
+            margin-top: 0.25rem;
+            padding-top: 0.125rem;
+        }
+        
+        .typing-indicator {
+            background: var(--whatsapp-incoming);
+            padding: 0.5rem;
+            border-radius: 10px 10px 10px 3px;
+            max-width: 60px;
+            box-shadow: var(--shadow-sm);
+            opacity: 0;
+            transform: translateY(8px);
+            transition: all 0.3s ease;
+            margin-bottom: 0.5rem;
+        }
+        
+        .typing-indicator.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .typing-dots {
+            display: flex;
+            gap: 3px;
+            justify-content: center;
+        }
+        
+        .dot {
+            width: 4px;
+            height: 4px;
+            background: var(--text-secondary);
+            border-radius: 50%;
+            animation: typing 1.2s infinite;
+        }
+        
+        .dot:nth-child(2) { animation-delay: 0.15s; }
+        .dot:nth-child(3) { animation-delay: 0.3s; }
+        
+        /* Benefits */
+        .benefits {
+            background: var(--bg-secondary);
+        }
+        
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .benefit-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.2s ease;
+            opacity: 0;
+            transform: translateY(20px);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .benefit-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .benefit-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .benefit-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--gradient-1);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            color: white;
+            margin-bottom: 1rem;
+        }
+        
+        .benefit-card:nth-child(2) .benefit-icon { background: var(--gradient-1); }
+        .benefit-card:nth-child(3) .benefit-icon { background: var(--gradient-1); }
+        .benefit-card:nth-child(4) .benefit-icon { background: var(--gradient-1); }
+        
+        .benefit-card h3 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+        
+        .benefit-card p {
+            color: var(--text-secondary);
+            line-height: 1.5;
+            font-size: 0.875rem;
+        }
+        
+        /* Testimonials */
+        .testimonials {
+            background: var(--bg-accent);
+            padding: 3rem 0;
+        }
+        
+        .testimonials-carousel {
+            position: relative;
+            max-width: 600px;
+            margin: 0 auto;
+            margin-top: 2rem;
+            height: 180px;
+            overflow: hidden;
+        }
+        
+        .testimonial-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow-sm);
+            position: absolute;
+            width: 100%;
+            opacity: 0;
+            transform: translateX(100%);
+            transition: all 0.5s ease;
+        }
+        
+        .testimonial-card.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .testimonial-card.prev {
+            opacity: 0;
+            transform: translateX(-100%);
+        }
+        
+        .testimonial-text {
+            font-size: 0.9rem;
+            line-height: 1.5;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            font-style: italic;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .testimonial-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--gradient-1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 0.875rem;
+        }
+        
+        .testimonial-info h4 {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.125rem;
+            font-size: 0.875rem;
+        }
+        
+        .testimonial-info p {
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+        }
+        
+        .testimonial-dots {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .testimonial-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--border);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .testimonial-dot.active {
+            background: var(--accent);
+        }
+        
+        /* Pricing */
+        .pricing {
+            background: var(--bg-secondary);
+        }
+        
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .pricing-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            position: relative;
+            transition: all 0.2s ease;
+            opacity: 0;
+            transform: translateY(20px);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .pricing-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .pricing-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .pricing-card.featured {
+            border-color: var(--accent);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .popular-badge {
+            position: absolute;
+            top: -0.5rem;
+            left: 1rem;
+            background: var(--accent);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+        
+        .pricing-card h3 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.125rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+            color: var(--text-primary);
+        }
+        
+        .pricing-subtitle {
+            color: var(--text-tertiary);
+            margin-bottom: 1rem;
+            font-size: 0.8rem;
+        }
+        
+        .price {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+        
+        .price-note {
+            color: var(--text-tertiary);
+            font-size: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .features-list {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+        
+        .features-list li {
+            padding: 0.25rem 0;
+            color: var(--text-secondary);
+            position: relative;
+            padding-left: 1rem;
+            font-size: 0.8rem;
+        }
+        
+        .features-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--success);
+            font-weight: bold;
+            font-size: 0.875rem;
+        }
+        
+        .pricing-btn {
+            width: 100%;
+            background: var(--accent);
+            color: white;
+            padding: 0.75rem;
+            border-radius: 6px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.875rem;
+        }
+        
+        .pricing-btn:hover {
+            background: var(--accent-hover);
+            transform: translateY(-1px);
+        }
+        
+        .pricing-btn:disabled {
+            background: var(--bg-accent);
+            color: var(--text-tertiary);
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .coming-soon {
+            opacity: 0.6;
+        }
+        
+        /* FAQ */
+        .faq {
+            background: var(--bg-accent);
+        }
+        
+        .faq-list {
+            margin-top: 2rem;
+        }
+        
+        .faq-item {
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            margin-bottom: 0.75rem;
+            border: 1px solid var(--border);
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(15px);
+            transition: all 0.4s ease;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .faq-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .faq-question {
+            width: 100%;
+            background: none;
+            border: none;
+            padding: 1rem;
+            text-align: left;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .faq-toggle {
+            color: var(--accent);
+            font-size: 1.25rem;
+            transition: transform 0.2s ease;
+        }
+        
+        .faq-item.active .faq-toggle {
+            transform: rotate(45deg);
+        }
+        
+        .faq-answer {
+            color: var(--text-secondary);
+            line-height: 1.5;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            font-size: 0.875rem;
+            text-align: left;
+            padding: 0;
+        }
+        
+        .faq-answer.active {
+            max-height: 300px;
+            padding: 0 1rem 1rem 1rem;
+        }
+        
+        /* Final CTA */
+        .final-cta {
+            background: var(--bg-secondary);
+            padding: 2.5rem 0;
+            text-align: center;
+        }
+        
+        .final-cta-content {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .final-cta h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            color: var(--text-primary);
+        }
+        
+        .final-cta p {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+        
+        /* Footer */
+        .footer {
+            background: var(--bg-accent);
+            padding: 1.5rem 0;
+            text-align: center;
+            border-top: 1px solid var(--border);
+        }
+        
+        .footer p {
+            font-size: 0.8rem;
+            color: var(--text-tertiary);
+        }
+        
+        .footer a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .footer a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes typing {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-6px); }
+        }
+        
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .hero {
+                padding-top: 0.5rem;
+                padding-bottom: 0.25rem;
+            }
+            
+            .hero-container,
+            .step {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+                text-align: center;
+            }
+            
+            .step:nth-child(even) {
+                direction: ltr;
+            }
+            
+            .section {
+                padding: 2rem 0;
+            }
+            
+            .whatsapp-demo {
+                padding: 2rem 0;
+            }
+            
+            .testimonials {
+                padding: 2rem 0;
+            }
+            
+            .final-cta {
+                padding: 2rem 0;
+            }
+            
+            .hero-features {
+                justify-content: center;
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+            
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .pricing-card.featured {
+                transform: none;
+            }
+            
+            .step-visual {
+                height: 150px;
+            }
+            
+            .chat-messages {
+                height: 250px;
+            }
+            
+            .testimonials-carousel {
+                height: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav" id="nav">
+        <div class="nav-container">
+            <div class="logo">
+                Scavenger Dash
+                <span class="logo-london">London</span>
+            </div>
+            <a href="#pricing" class="nav-cta">Get Started</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1>Beat Your Friends to the Finish in the Ultimate Item Collection Race</h1>
+                <p class="hero-subtitle">
+                    A WhatsApp-powered scavenger hunt where teams race across London collecting bizarre items before meeting at a great pub.
+                </p>
+                <div class="hero-features">
+                    <div class="hero-feature">
+                        <div class="icon">✓</div>
+                        <span>No App Download - Play Directly on WhatsApp</span>
+                    </div>
+                    <div class="hero-feature">
+                        <div class="icon">✓</div>
+                        <span>Instant Digital Delivery</span>
+                    </div>
+                </div>
+                <a href="#pricing" class="hero-cta">Start Your Dash</a>
+                <p class="price-note">From £2 per player</p>
+            </div>
+            <div class="hero-visual">
+                <!-- This space for future hero visual -->
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="section how-it-works">
+        <div class="section-container">
+            <h2 class="section-title">How It Works</h2>
+            <p class="section-subtitle">Three simple steps to the ultimate London adventure</p>
+            
+            <div class="steps">
+                <div class="step">
+                    <div class="step-content">
+                        <h3>Assemble Your Teams</h3>
+                        <p class="step-description">
+                            Gather your friends, family or colleagues at a start point of your choosing. Join your exclusive game session by sending your game code to the Scavenger Dash number on Whatsapp and set up your game.
+                        </p>
+                    </div>
+                    <div class="step-visual">
+                        <!-- Image placeholder for assembly -->
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-content">
+                        <h3>Dash Across London</h3>
+                        <p class="step-description">
+                            Split into your teams and race across the city collecting bizarre items from your list. No one finds out what items you need to pick up en route to the finish until you start the race!<br><br>Strike the right balance between charming and bartering with strangers to keep costs low and prioritising speed by paying for items. Alternatively, in any dash, if you choose Easy Mode, you only need to get a picture with each of your items en route.
+                        </p>
+                    </div>
+                    <div class="step-visual">
+                        <!-- Image placeholder for dashing -->
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-content">
+                        <h3>Meet at the Finish</h3>
+                        <p class="step-description">
+                            Race with your collected items to a pub carefully selected by Scavenger Dash based on your preferred region of London. The first there with as many of the items wins the game! Compare your hauls and celebrate the winners.
+                        </p>
+                    </div>
+                    <div class="step-visual">
+                        <!-- Image placeholder for pub finish -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- WhatsApp Demo -->
+    <section class="whatsapp-demo">
+        <div class="whatsapp-container">
+            <h2 class="section-title">See It In Action</h2>
+            <p class="section-subtitle">Experience exactly how the game plays out on WhatsApp</p>
+            
+            <div class="chat-demo">
+                <div class="chat-header">
+                    <div class="chat-avatar">SD</div>
+                    <div class="chat-info">
+                        <h3>Scavenger Dash London</h3>
+                        <div class="chat-status">Online</div>
+                    </div>
+                </div>
+                <div class="chat-messages" id="chatMessages">
+                    <!-- Messages will be dynamically added -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits -->
+    <section class="section benefits">
+        <div class="section-container">
+            <h2 class="section-title">Why Choose Scavenger Dash</h2>
+            <p class="section-subtitle">More than just a game — it's a complete London experience</p>
+            
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon">👥</div>
+                    <h3>Perfect for Groups</h3>
+                    <p>Ideal for corporate events, team building, stag and hen parties, or just an epic day out with friends exploring London.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">💰</div>
+                    <h3>Incredible Value</h3>
+                    <p>From just £2 per player — less than the price of a pint. Hours of entertainment and memories that will last forever.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">🗺️</div>
+                    <h3>Explore London</h3>
+                    <p>Discover hidden gems and see the city from a completely new perspective while racing against your friends.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">💪</div>
+                    <h3>Rejection Therapy</h3>
+                    <p>Build confidence by chatting with strangers and bartering for items. The fun way to step out of your comfort zone.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials">
+        <div class="section-container">
+            <h2 class="section-title">What Players Say</h2>
+            <p class="section-subtitle">Real experiences from London adventurers</p>
+            
+            <div class="testimonials-carousel">
+                <div class="testimonial-card active">
+                    <p class="testimonial-text">
+                        "Absolutely brilliant for our team away day. Had us all talking to strangers and working together in ways we never expected. The pub finish was perfect!"
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">S</div>
+                        <div class="testimonial-info">
+                            <h4>Sarah Chen</h4>
+                            <p>Marketing Director</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <p class="testimonial-text">
+                        "Best stag do activity ever. We were crying with laughter trying to convince strangers to give us random items. Ended up making friends with half of Camden!"
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">M</div>
+                        <div class="testimonial-info">
+                            <h4>Mike Johnson</h4>
+                            <p>Groom & Adventure Seeker</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <p class="testimonial-text">
+                        "We've done escape rooms and crazy golf, but this was something completely different. Loved discovering parts of London we'd never been to before."
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">E</div>
+                        <div class="testimonial-info">
+                            <h4>Emma Rodriguez</h4>
+                            <p>Weekend Warrior</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="testimonial-dots">
+                <div class="testimonial-dot active" onclick="showTestimonial(0)"></div>
+                <div class="testimonial-dot" onclick="showTestimonial(1)"></div>
+                <div class="testimonial-dot" onclick="showTestimonial(2)"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing -->
+    <section class="section pricing" id="pricing">
+        <div class="section-container">
+            <h2 class="section-title">Choose Your Adventure</h2>
+            
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3>Classic Dash</h3>
+                    <p class="pricing-subtitle">2-3 Phone Numbers</p>
+                    <div class="price">£20</div>
+                    <p class="price-note">From £2.20 per player</p>
+                    <ul class="features-list">
+                        <li>The classic experience</li>
+                        <li>2-3 phone numbers (2-9 players)</li>
+                        <li>Finish at a great London pub</li>
+                        <li>Choose your finish region</li>
+                        <li>Easy or hard mode</li>
+                        <li>Leaderboard upon completion</li>
+                    </ul>
+                    <button class="pricing-btn" onclick="selectPlan('Classic 2-3')">Select & Go to Checkout</button>
+                </div>
+
+                <div class="pricing-card featured">
+                    <div class="popular-badge">Most Popular</div>
+                    <h3>Classic Dash</h3>
+                    <p class="pricing-subtitle">4-6 Phone Numbers</p>
+                    <div class="price">£30</div>
+                    <p class="price-note">From £1.67 per player</p>
+                    <ul class="features-list">
+                        <li>Perfect for larger groups</li>
+                        <li>4-6 phone numbers (4-18 players)</li>
+                        <li>Finish at a great London pub</li>
+                        <li>Choose your finish region</li>
+                        <li>Easy or hard mode</li>
+                        <li>Leaderboard upon completion</li>
+                    </ul>
+                    <button class="pricing-btn" onclick="selectPlan('Classic 4-6')">Select & Go to Checkout</button>
+                </div>
+
+                <div class="pricing-card coming-soon">
+                    <h3>PRO Dash</h3>
+                    <p class="pricing-subtitle">For Experienced Players</p>
+                    <div class="price">Soon</div>
+                    <p class="price-note">Advanced features</p>
+                    <ul class="features-list">
+                        <li>Full custom setup</li>
+                        <li>Custom finish locations</li>
+                        <li>Custom items and budgets</li>
+                        <li>Different items per team</li>
+                        <li>Time limits and wild card mode</li>
+                        <li>Co-op mode</li>
+                        <li>Anonymous mid-game messages</li>
+                        <li>Post-game analytics</li>
+                    </ul>
+                    <button class="pricing-btn" disabled>Coming Soon</button>
+                </div>
+
+                <div class="pricing-card coming-soon">
+                    <h3>Corporate Dash</h3>
+                    <p class="pricing-subtitle">For Big Teams</p>
+                    <div class="price">Soon</div>
+                    <p class="price-note">Enterprise solution</p>
+                    <ul class="features-list">
+                        <li>Unlimited players</li>
+                        <li>Custom game start messages</li>
+                        <li>Custom finish locations</li>
+                        <li>Dedicated support</li>
+                        <li>Team analytics dashboard</li>
+                        <li>Branded experience</li>
+                        <li>Multiple simultaneous games</li>
+                    </ul>
+                    <button class="pricing-btn" disabled>Coming Soon</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section faq">
+        <div class="section-container">
+            <h2 class="section-title">Frequently Asked Questions</h2>
+            <p class="section-subtitle">Everything you need to know about your London adventure</p>
+            
+            <div class="faq-list">
+                <div class="faq-item">
+                    <button class="faq-question">
+                        How do I set up my game?
+                        <span class="faq-toggle">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        Once you buy a dash you will instantly be sent a game code which you can use to start your game at any time. You will be guided through setting up your game, including your end location and game mode, when you start your game.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        How long does a game take?
+                        <span class="faq-toggle">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        Easy mode typically takes 30-60 minutes plus travel time, while hard mode can take 60-180 minutes plus travel time. It really depends on how long it takes you to obtain the items and the locations of your chosen start and finish locations. The beauty is you control the pace and can make it as quick or leisurely as you want.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        What is the difference between easy and hard mode?
+                        <span class="faq-toggle">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        In easy mode, you just need photos of yourself with each item — perfect for quick games and great social media content. Hard mode requires you to physically obtain and bring the items to the finish line for the ultimate challenge.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        How many people can play?
+                        <span class="faq-toggle">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        You pay for the number of phone numbers and how many people play per number is up to you - but we find the game works best with 1-3 players per number. Our Classic 2-3 package supports 2-9 players, while Classic 4-6 supports 4-18 players. You can play as individuals or squeeze your team around one phone — whatever works best for your group.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        Where do the games finish?
+                        <span class="faq-toggle">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        All games finish at carefully selected great London pubs. You can choose your preferred region (North, South, East, West, or Central London) and we will pick a fantastic spot with good vibes and great drinks.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        Do I need to pay for the items?
+                        <span class="faq-toggle">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        That is entirely up to you and part of the fun. Players typically spend a few pounds obtaining the items, but Scavenger Dash has deliberately chosen items that you could reasonably obtain for nothing or for a small sum of money. In the Pro version of the game, you will be able to set budgets that teams need to adhere to to win! The challenge is in being creative — charm strangers, barter with locals, trade skills for items, or if all else fails, open your wallet. It is about social skills and creativity.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        Is this suitable for corporate events?
+                        <span class="faq-toggle">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        Absolutely. Scavenger Dash is perfect for team building, corporate away days, and office events. It gets people talking, collaborating, and stepping out of their comfort zones in a fun, memorable way.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="final-cta">
+        <div class="section-container">
+            <div class="final-cta-content">
+                <h2>Ready to Start Your London Adventure?</h2>
+                <p>Join thousands of players who've discovered the most fun way to explore London and beat their friends to the pub.</p>
+                <a href="#pricing" class="hero-cta">Start Your Dash Now</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="section-container">
+            <p>Made by <a href="https://adamthompson.me" target="_blank">Adam Thompson</a> 2025 ©</p>
+        </div>
+    </footer>
+
+    <script>
+        // Navigation scroll behavior
+        let lastScrollTop = 0;
+        const nav = document.getElementById('nav');
+        
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            if (scrollTop > lastScrollTop && scrollTop > 100) {
+                nav.classList.add('hidden');
+            } else {
+                nav.classList.remove('hidden');
+            }
+            
+            lastScrollTop = scrollTop;
+        });
+
+        // WhatsApp Chat Animation
+        const messages = [
+            { type: 'incoming', text: 'Welcome to Scavenger Dash London! Ready for an adventure?', delay: 1000 },
+            { type: 'outgoing', text: 'YES123456', delay: 1500 },
+            { type: 'incoming', text: 'Perfect! Your finish location is The George Inn, Southwark.', delay: 1000 },
+            { type: 'incoming', text: 'Your game admin chose hard mode. Here are your items to collect:', delay: 1000 },
+            { type: 'incoming', text: '• A red balloon\n• Business card from a stranger\n• A 50p coin\n• Something that rhymes with "dash"\n• A menu from any restaurant\n• A feather\n• Something purple', delay: 1000, class: 'items-list' },
+            { type: 'incoming', text: 'Go! The race is on!', delay: 1000 },
+            { type: 'outgoing', text: 'ITEM', delay: 1500 },
+            { type: 'incoming', text: 'Nice work! You now have 1 item (6 more to go). Keep going!', delay: 1000 },
+            { type: 'incoming', text: 'Sarah just obtained an item!', delay: 1000 },
+            { type: 'outgoing', text: 'ARRIVED', delay: 1500 },
+            { type: 'incoming', text: 'Congratulations! You arrived in 1 hour 23 minutes. Leaderboard coming up!', delay: 1000 }
+        ];
+
+        let messageIndex = 0;
+        let chatStarted = false;
+
+        function startChat() {
+            if (chatStarted) return;
+            chatStarted = true;
+
+            const chatContainer = document.getElementById('chatMessages');
+            
+            function addMessage() {
+                if (messageIndex >= messages.length) {
+                    setTimeout(() => {
+                        messageIndex = 0;
+                        chatContainer.innerHTML = '';
+                        chatStarted = false;
+                        setTimeout(startChat, 1500);
+                    }, 2500);
+                    return;
+                }
+
+                const message = messages[messageIndex];
+                
+                if (message.type === 'incoming') {
+                    // Add typing indicator with reduced delay
+                    const typingEl = document.createElement('div');
+                    typingEl.className = 'typing-indicator';
+                    typingEl.innerHTML = `
+                        <div class="typing-dots">
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                        </div>
+                    `;
+                    chatContainer.appendChild(typingEl);
+                    chatContainer.scrollTop = chatContainer.scrollHeight;
+                    
+                    setTimeout(() => {
+                        typingEl.classList.add('visible');
+                    }, 50);
+                    
+                    setTimeout(() => {
+                        chatContainer.removeChild(typingEl);
+                        addMessageElement(message);
+                    }, 800);
+                } else {
+                    // Reduced delay before showing typing dots after user message
+                    setTimeout(() => {
+                        addMessageElement(message);
+                    }, 300);
+                }
+            }
+
+            function addMessageElement(message) {
+                const messageEl = document.createElement('div');
+                messageEl.className = `message ${message.type}${message.class ? ' ' + message.class : ''}`;
+                messageEl.innerHTML = `
+                    ${message.text.replace(/\n/g, '<br>')}
+                    <div class="message-time">${new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}</div>
+                `;
+                
+                chatContainer.appendChild(messageEl);
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+                
+                setTimeout(() => {
+                    messageEl.classList.add('visible');
+                }, 50);
+                
+                messageIndex++;
+                setTimeout(addMessage, message.delay || 1000);
+            }
+
+            setTimeout(addMessage, 800);
+        }
+
+        // Intersection Observer for scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -30px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    
+                    // Start chat when WhatsApp section is visible
+                    if (entry.target.classList.contains('chat-demo')) {
+                        setTimeout(startChat, 300);
+                    }
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements for animation
+        document.querySelectorAll('.step, .benefit-card, .pricing-card, .faq-item, .chat-demo').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Testimonials Carousel
+        let currentTestimonial = 0;
+        const testimonials = document.querySelectorAll('.testimonial-card');
+        const testimonialDots = document.querySelectorAll('.testimonial-dot');
+
+        function showTestimonial(index) {
+            testimonials.forEach((testimonial, i) => {
+                testimonial.classList.remove('active', 'prev');
+                if (i === index) {
+                    testimonial.classList.add('active');
+                } else if (i === currentTestimonial) {
+                    testimonial.classList.add('prev');
+                }
+            });
+
+            testimonialDots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === index);
+            });
+
+            currentTestimonial = index;
+        }
+
+        function nextTestimonial() {
+            const nextIndex = (currentTestimonial + 1) % testimonials.length;
+            showTestimonial(nextIndex);
+        }
+
+        // Auto-rotate testimonials every 5 seconds
+        setInterval(nextTestimonial, 5000);
+
+        // Manual testimonial control
+        window.showTestimonial = showTestimonial;
+
+        // FAQ functionality
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const faqItem = question.parentElement;
+                const answer = question.nextElementSibling;
+                const toggle = question.querySelector('.faq-toggle');
+                
+                // Close other FAQs
+                document.querySelectorAll('.faq-item').forEach(item => {
+                    if (item !== faqItem) {
+                        item.classList.remove('active');
+                        item.querySelector('.faq-answer').classList.remove('active');
+                        item.querySelector('.faq-toggle').textContent = '+';
+                    }
+                });
+                
+                // Toggle current FAQ
+                const isActive = faqItem.classList.contains('active');
+                faqItem.classList.toggle('active');
+                answer.classList.toggle('active');
+                toggle.textContent = isActive ? '+' : '×';
+            });
+        });
+
+        // Plan selection
+        function selectPlan(planName) {
+            const button = event.target;
+            const originalText = button.textContent;
+            button.textContent = 'Selected!';
+            button.style.background = 'var(--success)';
+            
+            setTimeout(() => {
+                alert(`Excellent choice! You selected: ${planName}\n\nRedirecting to secure checkout...`);
+                button.textContent = originalText;
+                button.style.background = 'var(--accent)';
+            }, 800);
+        }
+
+        // Smooth scrolling for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Stagger animation delays for cards
+        document.querySelectorAll('.benefit-card').forEach((card, index) => {
+            card.style.transitionDelay = `${index * 0.1}s`;
+        });
+
+        document.querySelectorAll('.pricing-card').forEach((card, index) => {
+            card.style.transitionDelay = `${index * 0.08}s`;
+        });
+
+        document.querySelectorAll('.faq-item').forEach((item, index) => {
+            item.style.transitionDelay = `${index * 0.04}s`;
+        });
+    </script>
+</body>
+</html>
