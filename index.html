@@ -233,8 +233,6 @@
     width: 100%;
     max-width: 300px;
     height: auto;
-    border-radius: 12px;
-    box-shadow: var(--shadow-lg);
 }
 
 /* Mobile: Stack images above and below text */
@@ -242,21 +240,36 @@
     .hero-container {
         grid-template-columns: 1fr;
         gap: 1.5rem;
+        grid-template-areas: 
+            "image-main"
+            "content"
+            "image-secondary";
+    }
+    
+    .hero-content {
+        grid-area: content;
     }
     
     .hero-visual {
-        order: -1; /* Move images above text on mobile */
+        display: contents; /* This allows the images to be placed individually */
+    }
+    
+    .hero-image-main {
+        grid-area: image-main;
+        max-width: 300px;
+        margin: 0 auto;
+        display: block;
+    }
+    
+    .hero-image-secondary {
+        grid-area: image-secondary;
+        max-width: 300px;
+        margin: 0 auto;
+        display: block;
     }
     
     .hero-images {
-        flex-direction: row;
-        justify-content: center;
-        gap: 1rem;
-    }
-    
-    .hero-image-main,
-    .hero-image-secondary {
-        max-width: 150px;
+        display: contents; /* This removes the flex container on mobile */
     }
 }
         
@@ -352,8 +365,8 @@
         .step-image {
             width: 100%;
             height: 100%;
-            object-fit: cover;
-            border-radius: 12px;
+            object-fit: contain;
+            margin: auto;
         }
         
         /* WhatsApp Demo */
